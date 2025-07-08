@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../api/axios';
 
 const BidModal = ({ isOpen, onClose, auctionId, onSuccess }) => {
     const [bidAmount, setBidAmount] = useState('');
@@ -11,16 +12,12 @@ const BidModal = ({ isOpen, onClose, auctionId, onSuccess }) => {
         setError('');
 
         try {
-            const res = await fetch(`http://localhost:5000/api/auctions/${auctionId}/bid`, {
-                method: 'POST',
+            const res = await api.post(`/auctions/${auctionId}/bid`, { amount: bidAmount }, {
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify({ amount: bidAmount }),
             });
-
-            const data = await res.json();
+            const data = res.data;
 
             if (!res.ok) {
                 setError(data.message || 'Bid failed');

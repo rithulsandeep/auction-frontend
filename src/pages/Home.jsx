@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BidModal from '../components/BidModal';
+import api from '../api/axios';
 
 const Home = () => {
     const [auctions, setAuctions] = useState([]);
@@ -9,8 +10,8 @@ const Home = () => {
     const { user, logout } = useAuth();
 
     const fetchAuctions = async () => {
-        const res = await fetch('http://localhost:5000/api/auctions');
-        const data = await res.json();
+        const res = await api.get('/auctions');
+        const data = res.data;
         setAuctions(data);
     };
 

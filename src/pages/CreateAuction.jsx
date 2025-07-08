@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
 
 const CreateAuction = () => {
     const [formData, setFormData] = useState({
@@ -21,16 +22,12 @@ const CreateAuction = () => {
         setSuccess('');
 
         try {
-            const res = await fetch('http://localhost:5000/api/auctions', {
-                method: 'POST',
+            const res = await api.post('/auctions', formData, {
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify(formData),
             });
-
-            const data = await res.json();
+            const data = res.data;
 
             if (!res.ok) {
                 setError(data.message || 'Failed to create auction');
