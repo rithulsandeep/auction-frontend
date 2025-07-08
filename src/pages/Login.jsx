@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../api/axios';
 
 const Login = () => {
     const { login } = useAuth();
@@ -15,13 +16,9 @@ const Login = () => {
         e.preventDefault();
         setError('');
         try {
-            const res = await fetch('http://localhost:5000/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
-            const data = await res.json();
-            if (!res.ok) {
+            const res = await api.post('/auth/login', formData);
+            const data = res.data;
+            if (data.error) {
                 setError(data.message || 'Invalid credentials');
             } else {
                 login(data); // Pass backend response (with token) to context
