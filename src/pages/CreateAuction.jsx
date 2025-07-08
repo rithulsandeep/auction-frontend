@@ -22,21 +22,15 @@ const CreateAuction = () => {
         setSuccess('');
 
         try {
-            const res = await api.post('/auctions', formData, {
+            await api.post('/auctions', formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-            const data = res.data;
-
-            if (!res.ok) {
-                setError(data.message || 'Failed to create auction');
-            } else {
-                setSuccess('Auction created successfully!');
-                setTimeout(() => navigate('/'), 1500);
-            }
+            setSuccess('Auction created successfully!');
+            setTimeout(() => navigate('/'), 1500);
         } catch (err) {
-            setError('Something went wrong');
+            setError(err.response?.data?.message || 'Failed to create auction');
         }
     };
 

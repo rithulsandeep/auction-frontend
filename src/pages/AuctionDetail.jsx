@@ -34,12 +34,12 @@ const AuctionDetail = () => {
         setMessage('');
 
         try {
-            const res = await api.post(
+            await api.post(
                 `/auctions/${id}/bid`,
                 { amount: bidAmount },
                 {
                     headers: {
-                        Authorization: `Bearer ${user.token}`,
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                 }
             );

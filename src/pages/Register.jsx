@@ -18,17 +18,10 @@ const Register = () => {
 
         try {
             const res = await api.post('/auth/register', formData);
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                setError(data.message || 'Registration failed');
-            } else {
-                setSuccess('Registration successful! Redirecting...');
-                setTimeout(() => navigate('/login'), 1500);
-            }
+            setSuccess('Registration successful! Redirecting...');
+            setTimeout(() => navigate('/login'), 1500);
         } catch (err) {
-            setError('Something went wrong');
+            setError(err.response?.data?.message || 'Registration failed');
         }
     };
 

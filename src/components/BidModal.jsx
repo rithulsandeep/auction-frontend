@@ -12,21 +12,15 @@ const BidModal = ({ isOpen, onClose, auctionId, onSuccess }) => {
         setError('');
 
         try {
-            const res = await api.post(`/auctions/${auctionId}/bid`, { amount: bidAmount }, {
+            await api.post(`/auctions/${auctionId}/bid`, { amount: bidAmount }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-            const data = res.data;
-
-            if (!res.ok) {
-                setError(data.message || 'Bid failed');
-            } else {
-                onSuccess(); // refresh parent data
-                onClose();   // close modal
-            }
+            onSuccess(); // refresh parent data
+            onClose();   // close modal
         } catch (err) {
-            setError('Something went wrong');
+            setError(err.response?.data?.message || 'Something went wrong');
         }
     };
 

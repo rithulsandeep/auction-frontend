@@ -17,15 +17,10 @@ const Login = () => {
         setError('');
         try {
             const res = await api.post('/auth/login', formData);
-            const data = res.data;
-            if (data.error) {
-                setError(data.message || 'Invalid credentials');
-            } else {
-                login(data); // Pass backend response (with token) to context
-                navigate('/');
-            }
+            login(res.data); // Pass backend response (with token) to context
+            navigate('/');
         } catch (err) {
-            setError('Something went wrong');
+            setError(err.response?.data?.message || 'Invalid credentials');
         }
     };
 
