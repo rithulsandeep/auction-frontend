@@ -7,7 +7,7 @@ const CreateAuction = () => {
         title: '',
         description: '',
         startingBid: '',
-        endTime: '',
+        endsAt: '', // <-- changed here
     });
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
@@ -22,11 +22,17 @@ const CreateAuction = () => {
         setSuccess('');
 
         try {
-            await api.post('/auctions', formData, {
+            await api.post('/auctions', {
+                title: formData.title,
+                description: formData.description,
+                startingBid: formData.startingBid,
+                endsAt: formData.endsAt, // <-- changed here
+            }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
+            console.log('Auction created from CreateAuction:', formData);
             setSuccess('Auction created successfully!');
             setTimeout(() => navigate('/'), 1500);
         } catch (err) {
@@ -79,8 +85,8 @@ const CreateAuction = () => {
                         <label className="block mb-1 font-medium">End Time</label>
                         <input
                             type="datetime-local"
-                            name="endTime"
-                            value={formData.endTime}
+                            name="endsAt" // <-- changed here
+                            value={formData.endsAt} // <-- changed here
                             onChange={handleChange}
                             className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             required

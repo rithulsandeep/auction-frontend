@@ -4,9 +4,9 @@ import React from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const storedUser = localStorage.getItem('user');
     const [user, setUser] = useState(() => {
         try {
+            const storedUser = localStorage.getItem('user');
             return storedUser && storedUser !== "undefined"
                 ? JSON.parse(storedUser)
                 : null;

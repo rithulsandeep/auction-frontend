@@ -42,6 +42,12 @@ const Home = () => {
                         </>
                     ) : (
                         <>
+                            <Link
+                                to="/create"
+                                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium"
+                            >
+                                Create Auction
+                            </Link>
                             <span className="text-gray-700 font-medium">
                                 Welcome, <span className="font-semibold">{user.username}</span>
                             </span>
@@ -71,7 +77,7 @@ const Home = () => {
                         <p className="text-sm text-green-700 font-semibold mb-4">
                             Current Highest Bid: ₹{auction.currentBid || auction.startingBid}
                         </p>
-                        {user && user._id !== auction.owner && (
+                        {user && (
                             <button
                                 onClick={() => setSelectedAuction(auction._id)}
                                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
