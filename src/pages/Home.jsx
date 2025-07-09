@@ -21,6 +21,17 @@ const Home = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 py-8 px-4">
+            {/* Cold start alert */}
+            <div className="max-w-6xl mx-auto mb-6">
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded">
+                    <p className="font-semibold">Notice:</p>
+                    <p>
+                        If you do not see any auctions or cannot log in, please wait 2-3 minutes and refresh the page.
+                        The server may be starting up after a period of inactivity (free hosting puts it to sleep).
+                    </p>
+                </div>
+            </div>
+
             {/* Header */}
             <div className="flex justify-between items-center max-w-6xl mx-auto mb-8">
                 <h1 className="text-3xl font-bold">Auction Platform</h1>
